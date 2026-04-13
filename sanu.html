@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I Love You Sanu</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins&family=Dancing+Script&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to bottom, #ffc0cb, #ff758f);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    color: white;
+}
+
+.container { z-index: 2; }
+
+h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3rem;
+}
+
+.bear {
+    font-size: 60px;
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+button {
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 30px;
+    cursor: pointer;
+    border: none;
+    margin: 10px;
+}
+
+#yesBtn {
+    background: linear-gradient(to right, red, #ff4d6d);
+    color: white;
+}
+
+#noBtn {
+    background: white;
+    color: red;
+    border: 2px solid red;
+    position: fixed;
+}
+
+/* Celebration */
+.celebration {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: black;
+}
+
+/* Dark overlay */
+.celebration::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+}
+
+.celebration * {
+    position: relative;
+    z-index: 2;
+}
+
+.celebration h1 {
+    font-size: 4rem;
+}
+
+/* ❤️ HEART ANIMATION */
+.heart {
+    position: fixed;
+    bottom: -10px;
+    font-size: 20px;
+    animation: floatUp linear infinite;
+    color: pink;
+    z-index: 3;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) scale(1.5);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="mainContent">
+    <div class="bear">🐻</div>
+    <h1>I Love You janu ❤️</h1>
+    <p><i>You are my happiness 💖</i></p>
+
+    <button id="yesBtn">Yes ❤️</button>
+    <button id="noBtn">No</button>
+</div>
+
+<div class="celebration" id="celebration">
+    <h1>Yayyy janu 💖</h1>
+    <p>I love you forever ❤️</p>
+</div>
+
+<audio id="song" loop>
+  <source src="song1.mpeg" type="audio/mpeg">
+</audio>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const celebration = document.getElementById("celebration");
+const song = document.getElementById("song");
+
+const messages = ["No chance 😜","Try again 😏","Think again ❤️","Not possible 😆","Only YES allowed 😍"];
+
+let i = 0;
+
+noBtn.addEventListener("click", () => {
+    i = (i + 1) % messages.length;
+    noBtn.innerText = messages[i];
+    noBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
+    noBtn.style.top = Math.random() * (window.innerHeight - 50) + "px";
+});
+
+yesBtn.addEventListener("click", () => {
+    document.getElementById("mainContent").style.display = "none";
+    celebration.style.display = "flex";
+
+    // 💖 IMAGE SLIDESHOW
+    const images = [
+        "janu.jpeg",
+        "janu2.jpeg",
+        "janu3.jpeg",
+        "janu4.jpeg",
+        "janu5.jpeg"
+    ];
+
+    let index = 0;
+    celebration.style.backgroundImage = `url('${images[0]}')`;
+
+    setInterval(() => {
+        index = (index + 1) % images.length;
+        celebration.style.backgroundImage = `url('${images[index]}')`;
+    }, 2000);
+
+    // ❤️ CREATE FLOATING HEARTS
+    setInterval(() => {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerText = "❤️";
+
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (2 + Math.random() * 3) + "s";
+        heart.style.fontSize = (15 + Math.random() * 20) + "px";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 5000);
+    }, 300);
+
+    song.play();
+});
+</script>
+
+</body>
+</html>
